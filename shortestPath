@@ -6,10 +6,6 @@ int start,end; // A = 0,B = 1 ,... , F = 5
 int ways[300];
 int count = 0;
 
-int shortest = 0;
-
-
-
 void findPath(int a,int b){
     if(a == b){
         int k;
@@ -35,18 +31,7 @@ void findPath(int a,int b){
                     printf("F ");
                 break;
             }
-            sum += path[ways[k]][ways[k+1]];
         }
-
-        if(shortest == 0){
-            shortest = sum;
-        }
-
-        if(sum < shortest){
-            shortest = sum;
-        }
-
-        printf("%d ",sum);
         printf("\n");
     }else{
         int i;
@@ -99,8 +84,6 @@ int main(){
     scanf("%d %d",&start,&end);
     ways[0] = start;count++;
     findPath(start,end);
-
-    printf("%d ",shortest);
 
     return 0;
 }
