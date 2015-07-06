@@ -6,65 +6,38 @@ int start,end; // A = 0,B = 1 ,... , F = 5
 int ways[300];
 int count = 0;
 
-int shortest = 0;
-
-
-
 void findPath(int a,int b){
     if(a == b){
-        int k;
-        int sum = 0;
-        for(k = 0;k < count;k++){
-            switch(ways[k]){
-                case 0:
-                    printf("A ");
-                break;
-                case 1:
-                    printf("B ");
-                break;
-                case 2:
-                    printf("C ");
-                break;
-                case 3:
-                    printf("D ");
-                break;
-                case 4:
-                    printf("E ");
-                break;
-                case 5:
-                    printf("F ");
-                break;
-            }
-            sum += path[ways[k]][ways[k+1]];
-        }
-
-        if(shortest == 0){
-            shortest = sum;
-        }
-
-        if(sum < shortest){
-            shortest = sum;
-        }
-
-        printf("%d ",sum);
-        printf("\n");
+    	return path[a][b];
     }else{
         int i;
         for(i = 0;i < 6;i++){
             if(path[a][i] != 0){
 
                 int j,d = 1;
+                int sum = 0;
                 for(j = 0;j < count;j++){
                     if(ways[j] == i){
                         d = 0;
-                    }
+                    }else{
+                    	if(sum == 0){
+                    		sum = path[i][b];
+                    		}
+                    		if(path[i][b] <sum && sum != 0){
+                    			sum = path[i][b];
+                    			findPath(i,b);
+                    			}
+                    	}
                 }
 
                 if(d == 1){
-                    ways[count] = i;
-                    count++;
-                    findPath(i,b);
-                    count--;
+                	int k;
+                	for(k=0;k<6;k++){
+                		if(path[k][b]==sum){
+                			 ways[count]=k;
+                			 count++;
+                			} 
+                		}
                 }
 
             }
@@ -99,8 +72,9 @@ int main(){
     scanf("%d %d",&start,&end);
     ways[0] = start;count++;
     findPath(start,end);
-
-    printf("%d ",shortest);
-
+    int i;
+    for(i=0;i<count;i++){
+    	printf("%d ",ways[i]);
+    	}
     return 0;
 }
