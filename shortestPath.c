@@ -6,8 +6,41 @@ int start,end; // A = 0,B = 1 ,... , F = 5
 int ways[300];
 int count = 0;
 
-void findPath(int a,int b){
-    
+int s[300];
+int c = 0;
+
+int findPath(int a,int b){
+    if(a==b){
+    	int o;
+    	for(o=0;o<count;o++){
+    		printf("%d ",ways[o]);
+    	}
+    	printf("\n");
+    	return -1;
+    }else{
+    	int i,sum,p;
+    	for(i=0;i<6;i++){
+    		int j,z=0;
+    		for(j=0;j<count;j++){
+    			if(ways[j] == i){
+    				z = 1;
+    			}
+    		}
+    		if(z == 0){
+    			ways[count] = i;count++;
+    			int d = findPath(i,b);
+    			count--;
+    			
+    			if(d == -1){
+    				sum == path[a][i];
+    			}else if(d<sum){
+    				sum = d;
+    				p = i;
+    			}
+    		}
+    	}
+    	s[c] = p;c++;
+    }
 }
 
 int main(){
@@ -32,9 +65,15 @@ int main(){
     path[3][5] = path[5][3] = 5;
 
     path[4][5] = path[5][4] = 30;
-
+    
     scanf("%d %d",&start,&end);
-
+    ways[count] = start;
     findPath(start,end);
+    
+    int i;
+    for(i=0;i<6;i++){
+    	//printf("%d ",s[i]);
+    }
+    
     return 0;
 }
