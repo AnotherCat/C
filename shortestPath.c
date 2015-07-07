@@ -8,36 +8,23 @@ int count = 0;
 
 void findPath(int a,int b){
     if(a == b){
-    	return path[a][b];
+        printf("\n");
     }else{
         int i;
         for(i = 0;i < 6;i++){
             if(path[a][i] != 0){
 
                 int j,d = 1;
-                int sum = 0;
                 for(j = 0;j < count;j++){
                     if(ways[j] == i){
                         d = 0;
-                    }else{
-                    	if(sum == 0){
-                    		sum = path[i][b];
-                    		}
-                    		if(path[i][b] <sum && sum != 0){
-                    			sum = path[i][b];
-                    			findPath(i,b);
-                    			}
-                    	}
+                    }
                 }
 
                 if(d == 1){
-                	int k;
-                	for(k=0;k<6;k++){
-                		if(path[k][b]==sum){
-                			 ways[count]=k;
-                			 count++;
-                			} 
-                		}
+                    ways[count]=i;
+                    count++;
+                    findPath(i,b);
                 }
 
             }
@@ -72,9 +59,5 @@ int main(){
     scanf("%d %d",&start,&end);
     ways[0] = start;count++;
     findPath(start,end);
-    int i;
-    for(i=0;i<count;i++){
-    	printf("%d ",ways[i]);
-    	}
     return 0;
 }
