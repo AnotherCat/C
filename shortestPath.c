@@ -7,30 +7,7 @@ int ways[300];
 int count = 0;
 
 void findPath(int a,int b){
-    if(a == b){
-        printf("\n");
-    }else{
-        int i;
-        for(i = 0;i < 6;i++){
-            if(path[a][i] != 0){
-
-                int j,d = 1;
-                for(j = 0;j < count;j++){
-                    if(ways[j] == i){
-                        d = 0;
-                    }
-                }
-
-                if(d == 1){
-                    ways[count]=i;
-                    count++;
-                    findPath(i,b);
-                }
-
-            }
-        }
-    }
-
+    
 }
 
 int main(){
@@ -57,7 +34,7 @@ int main(){
     path[4][5] = path[5][4] = 30;
 
     scanf("%d %d",&start,&end);
-    ways[0] = start;count++;
+
     findPath(start,end);
     return 0;
 }
