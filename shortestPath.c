@@ -9,38 +9,74 @@ int count = 0;
 int s[300];
 int c = 0;
 
-int findPath(int a,int b){
-    if(a==b){
-    	int o;
-    	for(o=0;o<count;o++){
-    		printf("%d ",ways[o]);
-    	}
-    	printf("\n");
-    	return -1;
+void findPath(int a,int b){
+    if(a == b){
+        int k;
+        for(k = 0;k < count;k++){
+            switch(ways[k]){
+                case 0:
+                    printf("A ");
+                break;
+                case 1:
+                    printf("B ");
+                break;
+                case 2:
+                    printf("C ");
+                break;
+                case 3:
+                    printf("D ");
+                break;
+                case 4:
+                    printf("E ");
+                break;
+                case 5:
+                    printf("F ");
+                break;
+            }
+        }
+        printf("\n");
     }else{
-    	int i,sum,p;
-    	for(i=0;i<6;i++){
-    		int j,z=0;
-    		for(j=0;j<count;j++){
-    			if(ways[j] == i){
-    				z = 1;
-    			}
-    		}
-    		if(z == 0){
-    			ways[count] = i;count++;
-    			int d = findPath(i,b);
-    			count--;
-    			
-    			if(d == -1){
-    				sum == path[a][i];
-    			}else if(d<sum){
-    				sum = d;
-    				p = i;
-    			}
-    		}
-    	}
-    	s[c] = p;c++;
+        int i;
+        int sum = -2;
+        int p = -2;
+        for(i = 0;i < 6;i++){
+            if(path[a][i] != 0){
+
+                int j,d = 1;
+                for(j = 0;j < count;j++){
+                    if(ways[j] == i){
+                        d = 0;
+                    }
+                }
+
+                if(d == 1){
+                    ways[count] = i;
+                    count++;
+                    findPath(i,b);
+                    count--;
+                    if(sum == -2){
+                        sum = path[a][i];
+                        p = i;
+                    }
+                    if(path[a][i] < sum){
+                        sum = path[a][i];
+                        p = i;
+                    }
+                }
+
+            }
+        }
+        int d = 0;
+        for(i = 0; i < c;i++){
+            if(s[i] == p){
+                d = 1;
+            }
+        }
+        if(d == 0){
+            s[c] = p;c++;
+        }
     }
+
 }
 
 int main(){
@@ -65,15 +101,22 @@ int main(){
     path[3][5] = path[5][3] = 5;
 
     path[4][5] = path[5][4] = 30;
-    
+
     scanf("%d %d",&start,&end);
-    ways[count] = start;
+    ways[0] = start;count++;
     findPath(start,end);
-    
+    s[c] = start;c++;
+    printf("Shortest Way : ");
     int i;
-    for(i=0;i<6;i++){
-    	//printf("%d ",s[i]);
+    for(i = c-1;i >= 0; i--){
+        switch(s[i]){
+            case 0:printf("A ");break;
+            case 1:printf("B ");break;
+            case 2:printf("C ");break;
+            case 3:printf("D ");break;
+            case 4:printf("E ");break;
+            case 5:printf("F ");break;
+        }
     }
-    
     return 0;
 }
