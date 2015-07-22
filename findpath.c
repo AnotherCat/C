@@ -4,7 +4,31 @@ int path[6][6],start,end;
 int ways[300],count = 0;
 
 void f(int start,int end){
+    if(path[start][end] == -1){
+        int i;
+        for(i = 0;i<count;i++){
+            printf("%d ",ways[i]);
+        }
+        printf("\n");
+    }else{
+        int i;
+        for(i = 0;i < 6;i++){
+            if(path[start][i] != 0 && path[start][i] != -1){
+                int j,b=0;
+                for(j = 0;j < count;j++){
+                    if(ways[j] == i){
+                        b = 1;
+                    }
+                }
 
+                if(b == 0){
+                    ways[count] = i;count++;
+                    f(i,end);
+                    count--;
+                }
+            }
+        }
+    }
 }
 
 int main(){
