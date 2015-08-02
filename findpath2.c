@@ -2,59 +2,34 @@
 #include<stdio.h>
 
 int path[6][6],start,end;
-int ways[300],count = 0,check[300];
+int check[300]={0};
+int ways[300],pt = 0;
 
-int shortest(int a){
-    int i,sum,min = -1,result;
-    check[a] = 1;
-    for(i = 0;i < 6;i++){
-        if(check[i] != 1 && path[a][i] > 0){
-            sum = path[a][i];
-            if(min == -1){
-                min = sum;
-                result = i;
-            }else{
-                if(sum < min){
-                    min = sum;
-                    result = i;
-                }
+int f(int s,int e)
+{
+    int i,sum,min=-1;
+    if(s==end)
+    {
+        return 0;
+    }
+    check[s]=1;
+    for(i=0;i<6;i++)
+    {
+        if(check[i]!=1&&path[s][i]>0)
+        {
+            sum=path[s][i]+f(i,e);
+            if(min!=-1&&sum<min)
+            {
+                min=sum;
+            }
+            else if(min==-1)
+            {
+                min=sum;
             }
         }
     }
-    return result;
-}
-
-int f(int s,int e){
-    if(path[s][e] == -1){
-        int i;
-        for(i = 0;i< count;i++){
-            switch(ways[i]){
-            case 0:
-                printf("A ");
-                break;
-            case 1:
-                printf("B ");
-                break;
-            case 2:
-                printf("C ");
-                break;
-            case 3:
-                printf("D ");
-                break;
-            case 4:
-                printf("E ");
-                break;
-            case 5:
-                printf("F ");
-                break;
-
-            }
-        }
-    }else{
-        int next = shortest(s);
-        ways[count] = next;count++;
-        f(next,e);
-    }
+    check[s]=0;
+    return min;
 }
 
 int main(){
@@ -81,8 +56,6 @@ int main(){
     path[4][5] = path[5][4] = 30;
 
     scanf("%d %d",&start,&end);
-    ways[count] = start;count++;
-    f(start,end);
-
+    printf("%d\n",f(start,end));
     return 0;
 }
